@@ -5,23 +5,27 @@ class String
 {
 private:
 	char* name;
-	void copy(const String& other);
+	void copy(const String&);
 	void erase();
 public:
 	String();
-	String(const char* _name);
-	String(const String& other);
-	String& operator=(const String& other);
+	String(const char*);
+	String(const String&);
+	String& operator=(const String&);
 	~String();
 
+	void clear();
+	const char* getName() const;
 	size_t getLength() const;
-	String& operator=(const char* _name);
-	bool operator==(const String& other) const;
-	bool operator==(const char* _name) const;
-	bool operator!=(const String& other) const;
-	bool operator!=(const char* _name) const;
-	char operator[](size_t index) const;
-	String& operator+=(char element);
+	size_t convertFromString();
+	void remove(const size_t&);
+	String& operator=(const char*);
+	bool operator==(const String&) const;
+	bool operator==(const char*) const;
+	bool operator!=(const String&) const;
+	bool operator!=(const char*) const;
+	char& operator[](const size_t&);
+	String& operator+=(const char&);
 
 	friend std::ostream& operator<<(std::ostream& out, const String& str)
 	{
@@ -31,13 +35,15 @@ public:
 
 	friend std::istream& operator>>(std::istream& in, String& str)
 	{
+		String temp;
 		char symbol = ' ';
 		while (symbol != '\n')
 		{
 			symbol = in.get();
-			str += symbol;
+			temp += symbol;
 		}
-		str.name[str.getLength() - 1] = '\0';
+		temp[temp.getLength() - 1] = '\0';
+		str = temp;
 		return in;
 	}
 };

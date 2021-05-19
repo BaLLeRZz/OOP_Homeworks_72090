@@ -43,9 +43,61 @@ String::~String()
 	this->erase();
 }
 
+void String::clear()
+{
+	char* temp = new char[1];
+	temp[0] = '\0';
+	this->erase();
+	this->name = temp;
+}
+
+const char* String::getName() const
+{
+	return this->name;
+}
+
 size_t String::getLength() const
 {
 	return strlen(this->name);
+}
+
+size_t String::convertFromString()
+{
+	size_t count = 0;
+	size_t size = this->getLength();
+	for (size_t i = 0; i < size; i++)
+		if (this->name[i] >= '0' && this->name[i] <= '9')
+		{
+			if (this->name[i + 1] < '0' || this->name[i + 1] > '9')
+			{
+				count++;
+				break;
+			}
+			else
+				count++;
+		}
+
+	size_t position = pow(10, count - 1);
+	size_t sum = 0;
+	for (size_t i = 0; i < size; i++)
+		if (this->name[i] >= '0' && this->name[i] <= '9')
+		{
+			sum += position * (this->name[i] - 48);
+			position /= 10;
+		}
+
+	return sum;
+}
+
+void String::remove(const size_t& index)
+{
+	if (index >= strlen(this->name))
+		return;
+
+	for (size_t i = index; i < strlen(this->name); i++)
+		this->name[i] = this->name[i + 1];
+
+	this->name[strlen(this->name)] = '\0';
 }
 
 String& String::operator=(const char* _name)
@@ -58,8 +110,8 @@ String& String::operator=(const char* _name)
 
 bool String::operator==(const String& other) const
 {
-	if(this == &other)
-	   return true;
+	if (this == &other)
+		return true;
 
 	if (strlen(this->name) != strlen(other.name))
 		return false;
@@ -110,15 +162,15 @@ bool String::operator!=(const char* _name) const
 	return false;
 }
 
-char String::operator[](size_t index) const
+char& String::operator[](const size_t& index)
 {
-	if(index >= strlen(this->name))
-	   return 0;
+	if (index >= strlen(this->name))
+		return this->name[this->getLength() - 1];
 
 	return this->name[index];
 }
 
-String& String::operator+=(char element)
+String& String::operator+=(const char& element)
 {
 	char* temp = new char[strlen(this->name) + 2];
 	for (size_t i = 0; i < strlen(this->name); i++)
