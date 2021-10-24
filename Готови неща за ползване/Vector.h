@@ -24,6 +24,7 @@ public:
 	void clear();
 	void print() const;
 	void reverse();
+	bool containsAnother(const Vector<T>&);
 	T& operator[](const size_t&) const;
 	bool operator!=(const char*) const;
 
@@ -177,6 +178,29 @@ void Vector<T>::reverse()
 
 	this->erase();
 	this->vector = temp;
+}
+
+template<class T>
+bool Vector<T>::containsAnother(const Vector<T>& other)
+{
+	size_t sizeOther = other.getSize();
+	bool flag;
+	for (size_t i = 0; i < sizeOther; i++)
+	{
+		for (size_t j = 0; j < this->size; j++)
+		{
+			if (other[i] == this->vector[j])
+			{
+				flag = true;
+				break;
+			}
+			else
+				flag = false;
+		}
+		if (!flag)
+			return false;
+	}
+	return true;
 }
 
 template<class T>
