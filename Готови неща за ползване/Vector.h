@@ -23,6 +23,7 @@ public:
 	void remove(const size_t&);
 	void clear();
 	void print() const;
+	void reverse();
 	T& operator[](const size_t&) const;
 	bool operator!=(const char*) const;
 
@@ -160,7 +161,22 @@ template<class T>
 void Vector<T>::print() const
 {
 	for (size_t i = 0; i < this->size; ++i)
-		std::cout << this->vector[i] << std::endl;
+		std::cout << this->vector[i] << " ";
+}
+
+template<class T>
+void Vector<T>::reverse()
+{
+	if (this->size == 0)
+		return;
+
+	T* temp = new T[this->size];
+	size_t k = 0;
+	for (int i = size - 1; i >= 0; i--)
+		temp[k++] = this->vector[i];
+
+	this->erase();
+	this->vector = temp;
 }
 
 template<class T>
