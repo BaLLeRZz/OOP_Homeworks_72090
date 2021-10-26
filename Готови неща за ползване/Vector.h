@@ -24,7 +24,7 @@ public:
 	void clear();
 	void print() const;
 	void reverse();
-	bool containsAnother(const Vector<T>&);
+	bool containsAnother(const Vector<T>&) const;
 	T& operator[](const size_t&) const;
 	bool operator!=(const char*) const;
 
@@ -181,7 +181,7 @@ void Vector<T>::reverse()
 }
 
 template<class T>
-bool Vector<T>::containsAnother(const Vector<T>& other)
+bool Vector<T>::containsAnother(const Vector<T>& other) const
 {
 	size_t sizeOther = other.getSize();
 	bool flag;
